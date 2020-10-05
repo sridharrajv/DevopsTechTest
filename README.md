@@ -3,7 +3,7 @@
 The tech test is a chance for you to show off your skills and see what tasks
 you are likely to perform while working at SportBuff.
 
-*This is an open ended task and we don't expect you to deliver a full solution.*
+**This is an open ended task and we don't expect you to deliver a full solution.**
 This task is partly about your implementation, but also about your reasoning
 and ability to plan future work.
 
@@ -36,7 +36,7 @@ There is a docker-compose file that is used by the developers to test the applic
 ### So what do I do?
 
 We need a 'battle-ready' production deployment of these services.
-*You can use any tools and technologies you feel are appropriate* as long as they can meet the following requirements:
+**You can use any tools and technologies you feel are appropriate** as long as they can meet the following requirements:
 
 - Both of these services need their API endpoints exposed
 - All the service's dependencies need to be deployed (MySQL, Redis, ActiveMQ)
@@ -58,6 +58,6 @@ Please submit a git repo containing:
 ..* How you would implement the missing bits
 ..* Time estimate in days how long you think each bit would take
 
-*Provide an honest and reasonable time estimation*
+**Provide an honest and reasonable time estimation**
 Don't be tempted to under-estimate to impress us.
 If you got this far, we are already impressed :)
