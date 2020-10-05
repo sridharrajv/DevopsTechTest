@@ -11,8 +11,8 @@ Please feel free to reach out if you need any help with this task.
 
 ## Time-boxing
 
-Three to four hours should be enough to take a good bite out of this task
-Please do not spend more than 5 hours on this task, as this would not be
+Three to four hours should be enough to take a good bite out of this task.
+**Please do not spend more than 5 hours on this task**, as this would not be
 respectful of your time.
 
 Remember this exercise is about more than just the code you deliver.
