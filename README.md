@@ -33,6 +33,38 @@ These two Golang applications require deployments of:
 
 There is a docker-compose file that is used by the developers to test the application locally
 
+### How to test locally
+
+Start the dependency services with the command
+```
+$ docker-compose up -d mysql activemq redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5 redis-cluster-init
+```
+
+Wait for these services to be set up and ready, then start the services by running:
+
+```
+$ docker-compose up --build server dashboard
+```
+
+Add a new question ('buff') into the system
+```
+$ curl -X POST -H "Content-Type: application/json" -d '{"question": "who", "answers": ["me","you"]}' localhost:8080/buff -D -
+HTTP/1.1 200 OK
+Date: Tue, 06 Oct 2020 13:30:15 GMT
+Content-Length: 0
+```
+
+Verify that the 'buff' was stored in the system and can be served to the user
+```
+$ curl localhost:8081/buffs -D -
+HTTP/1.1 200 OK
+Date: Tue, 06 Oct 2020 13:30:34 GMT
+Content-Length: 186
+Content-Type: text/plain; charset=utf-8
+
+[{"ID":1,"CreatedAt":"2020-10-06T13:30:15.995Z","UpdatedAt":"2020-10-06T13:30:15.995Z","DeletedAt":{"Time":"0001-01-01T00:00:00Z","Valid":false},"question":"who","answers":["me","you"]}]
+```
+
 ### So what do I do?
 
 We need a 'battle-ready' production deployment of these services.
