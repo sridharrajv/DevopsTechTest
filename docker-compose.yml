@@ -1,0 +1,141 @@
+version: '3'
+services:
+  dashboard:
+    container_name: dashboard
+    build:
+      context: ./go/
+      dockerfile: Dockerfile-dashboard
+    ports:
+      - "8080:8080"
+    environment:
+      MQHOST: "activemq"
+      MQPORT: "61613"
+      MQUSERNAME: "admin"
+      MQPASSWORD: "admin"
+
+  server:
+    container_name: server
+    build:
+      context: ./go/
+      dockerfile: Dockerfile-server
+    ports:
+      - "8081:8080"
+    environment:
+      DBNAME: "buffup"
+      DBHOST: "mysql"
+      DBPORT: "3306"
+      DBUSER: "buffup"
+      DBPASS: "buffup"
+      REDISHOSTS: "redis-node-0:6379,redis-node-1:6380,redis-node-2:6381,redis-node-3:6382,redis-node-4:6383,redis-node-5:6384"
+      MQHOST: "activemq"
+      MQPORT: "61613"
+      MQUSERNAME: "admin"
+      MQPASSWORD: "admin"
+
+  mysql:
+    container_name: database
+    image: mysql:5.7.12
+    ports:
+      - 3306:3306
+      - 3316:3306
+    environment:
+      MYSQL_DATABASE: buffup
+      MYSQL_USER: buffup
+      MYSQL_PASSWORD: buffup
+      MYSQL_ROOT_PASSWORD: buffup
+    volumes:
+      - my-sql:/var/lib/mysql
+
+  activemq:
+    image: rmohr/activemq:5.15.9-alpine
+    container_name: activemq
+    ports:
+      - 8161:8161
+      - 61613:61613
+    volumes:
+      - ./activemq.xml:/opt/activemq/conf/activemq.xml
+
+  redis-node-0:
+    image: docker.io/bitnami/redis-cluster:5.0-debian-10
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-cluster_data-0:/bitnami/redis/data
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+  redis-node-1:
+    image: docker.io/bitnami/redis-cluster:5.0-debian-10
+    ports:
+      - '6380:6379'
+    volumes:
+      - redis-cluster_data-1:/bitnami/redis/data
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+  redis-node-2:
+    image: docker.io/bitnami/redis-cluster:5.0-debian-10
+    ports:
+      - '6381:6379'
+    volumes:
+      - redis-cluster_data-2:/bitnami/redis/data
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+  redis-node-3:
+    image: docker.io/bitnami/redis-cluster:5.0-debian-10
+    ports:
+      - '6382:6379'
+    volumes:
+      - redis-cluster_data-3:/bitnami/redis/data
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+  redis-node-4:
+    image: docker.io/bitnami/redis-cluster:5.0-debian-10
+    ports:
+      - '6383:6379'
+    volumes:
+      - redis-cluster_data-4:/bitnami/redis/data
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+  redis-node-5:
+    image: docker.io/bitnami/redis-cluster:5.0-debian-10
+    ports:
+      - '6384:6379'
+    volumes:
+      - redis-cluster_data-5:/bitnami/redis/data
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+  redis-cluster-init:
+    image: docker.io/bitnami/redis-cluster:5.0-debian-10
+    depends_on:
+      - redis-node-0
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - redis-node-4
+      - redis-node-5
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+      - 'REDIS_CLUSTER_REPLICAS=1'
+      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+      - 'REDIS_CLUSTER_CREATOR=yes'
+
+volumes:
+  my-sql:
+    driver: local
+  redis-cluster_data-0:
+    driver: local
+  redis-cluster_data-1:
+    driver: local
+  redis-cluster_data-2:
+    driver: local
+  redis-cluster_data-3:
+    driver: local
+  redis-cluster_data-4:
+    driver: local
+  redis-cluster_data-5:
+    driver: local
