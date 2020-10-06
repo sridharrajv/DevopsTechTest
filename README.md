@@ -83,12 +83,12 @@ We need a 'battle-ready' production deployment of these services.
 Please submit a git repo containing:
 
 1. Any progress made implementing your solution
-..* terraform scrips e.t.c.
+    * terraform scrips e.t.c.
 2. An extensive `README.md` that explains:
-..* What you have done
-..* What is still needed
-..* How you would implement the missing bits
-..* Time estimate in days how long you think each bit would take
+    * What you have done
+    * What is still needed
+    * How you would implement the missing bits
+    * Time estimate in days how long you think each bit would take
 
 **Provide an honest and reasonable time estimation**
 Don't be tempted to under-estimate to impress us.
